@@ -73,7 +73,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/api/upload' || req.path === '/api/teams') {
+  if (req.method !== 'GET') {
     next();
   } else {
     lusca.csrf()(req, res, next);
@@ -115,6 +115,7 @@ app.get('/teams/new', teamController.postTeam);
 app.get('/teams/:id', teamController.getTeam);
 const logoStorage = multer.diskStorage({destination: path.join(__dirname, 'uploads/teams'), filename: function (req, file, cb) {cb(null, file.originalname)}});
 app.post('/api/teams', multer({storage: logoStorage}).single('logo'), teamController.post);
+app.delete('/api/teams/:id', teamController.deleteTeam);
 app.get('/api/teams/:region', teamController.getTeamsForRegion);
 
 const playerController = require('./controllers/player');

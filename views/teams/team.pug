@@ -2,7 +2,10 @@ extends ../layout
 
 block content
   h2 #{team.name}
-    a.float-right.btn.btn-primary(href='/teams') Retour
+    .nt-btn-bar.float-right
+      if user
+        button.btn.btn-danger(onclick="deleteTeam('"+team.id+"')") Supprimer
+      a.btn.btn-primary(href='/teams') Retour
   hr
 
   .row

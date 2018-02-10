@@ -5,7 +5,7 @@ const Player = require('../models/Player');
  * GET /teams
  * Teams page.
  */
-exports.getTeams = (req, res) => {
+exports.getTeams = (req, res, next) => {
   let team = new Team;
   Team.find({}, function (err, teams) {
     if (err) return next(err);
@@ -25,7 +25,6 @@ exports.getTeams = (req, res) => {
 exports.getTeam = (req, res) => {
   const teamId = req.params.id;
   let player = new Player;
-  
   if (!teamId) res.redirect(index);
 
   Team.findOne({_id:teamId}, function (err, team) {
@@ -48,16 +47,20 @@ exports.postTeam = (req, res) => {
 };
 
 /**
- * POST /team
+ * POST /api/teams
  * Team create.
  */
-exports.post = (req, res) => {
+exports.post = (req, res, next) => {
   req.assert('name', 'Name cannot be blank').notEmpty();
   req.assert('region', 'Region cannot be blank').notEmpty();
 
   const errors = req.validationErrors();
   if (errors) {
     req.flash('errors', errors);
+    return res.redirect('/teams/new');
+  }
+  if (req.file === undefined) {
+    req.flash('errors', { msg: 'Logo cannot be empty.' });
     return res.redirect('/teams/new');
   }
 
@@ -78,6 +81,21 @@ exports.post = (req, res) => {
       if (err) return next(err);
       res.redirect('/teams/' + team._id);
     });
+  });
+};
+
+/**
+ * DELETE /api/teams/:id
+ * Team delete.
+ */
+exports.deleteTeam = (req, res, next) => {
+  const teamId = req.params.id;
+  if (!teamId) res.redirect(index);
+
+  Team.remove({_id:teamId}, function (err) {
+    if (err) return next(err);
+    req.flash('errors', { msg: 'The team was successfully deleted.' });
+    res.send(204);
   });
 };
 
