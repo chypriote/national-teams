@@ -15,11 +15,11 @@ block content
     .col-sm-10
       .row
         for player in team.players
-          .col-sm-2
+          .col
             if player.picture
-              img(style="max-height: 180px", src=player.picture)
+              img(src=player.picture)
             else
-              img(style="max-height: 180px", src="http://pro.lvp.es/bundles/lvpinterface/pro/img/no-foto.jpg")
+              img(src="http://pro.lvp.es/bundles/lvpinterface/pro/img/no-foto.jpg")
             p.text-center.font-weight-bold #{player.name}
             .nt-bubbles
               .nt-bubble

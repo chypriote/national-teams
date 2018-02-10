@@ -35,6 +35,8 @@ teamSchema.methods.availableRegions = () => {
     {value: 'nordic', name: 'Nordic Championship (NOR)', logo: 'nor'},
     {value: 'cz_slovakia', name: 'Hitpoint Masters (CZK)', logo: 'czs'},
     {value: 'balkan', name: 'Esports Balkan League (BLK)', logo: 'blk'},
+    {value: 'turkey', name: 'Türkiye Şampiyonluk Ligi (TR)', logo: 'tcl'},
+    {value: 'russia', name: 'LoL Continental League (RUS)', logo: 'lcl'},
   ];
 };
 
@@ -47,7 +49,7 @@ teamSchema.methods.regionInfos = (value) => {
 teamSchema.methods.regionName = function (region) {
   switch (region) {
     case 'france':
-      return 'Open Tour (FR)';
+      return 'Open Tour';
     case 'germany':
       return 'ESL Meisterschaft';
     case 'united_kingdom':
@@ -66,6 +68,10 @@ teamSchema.methods.regionName = function (region) {
       return 'Hitpoint Masters';
     case 'balkan':
       return 'Esports Balkan League';
+    case 'turkey':
+      return 'Türkiye Şampiyonluk Ligi';
+    case 'russia':
+      return 'LoL Continental League';
     default:
       return;
   }

@@ -16,16 +16,8 @@ block content
           label(class='col-sm-3 control-label', for='region') Region
           .col-sm-9
             select.form-control(name='region', id='region')
-              option(value='france') Open Tour (FR)
-              option(value='germany') ESL Meisterschaft (DE)
-              option(value='united_kingdom') ESL Premiership (UK)
-              option(value='spain') SuperLiga Orange (SP)
-              option(value='portugal') Moche LPL (POR)
-              option(value='italy') PG Nationals Predator (ITA)
-              option(value='poland') ESL Mistrzostwa Polski (POL)
-              option(value='nordic') Nordic Championship (NOR)
-              option(value='cz_slovakia') Hitpoint Masters (CZK)
-              option(value='balkan') Esports Balkan League (BLK)
+              for region in regions
+                option(value=region.value) #{region.name}
         .form-group.row
           label(class='col-sm-3 control-label', for='logo') Logo
           .col-sm-9

@@ -5,7 +5,7 @@ exports.postPlayer = (req, res) => {
   const player = new Player;
   const team = new Team;
   res.render('players/post', {
-    title: 'Ajouter un joueut',
+    title: 'Ajouter un joueur',
     roles: player.availableRoles(),
     regions: team.availableRegions(),
     countries: player.availableCountries(),

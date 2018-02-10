@@ -41,8 +41,10 @@ exports.getTeam = (req, res) => {
  * Post team page.
  */
 exports.postTeam = (req, res) => {
+  let team = new Team;
   res.render('teams/post', {
-    title: 'Ajouter une équipe'
+    title: 'Ajouter une équipe',
+    regions: team.availableRegions(),
   });
 };
 
