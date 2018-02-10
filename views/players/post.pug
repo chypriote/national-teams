@@ -1,0 +1,46 @@
+extends ../layout
+
+block content
+  .col-md-8.offset-md-2
+    .card
+      .card-header
+        h3 Ajouter un joueur
+      form.card-body(method='POST', action="/api/players")
+        input(type='hidden', name='_csrf', value=_csrf)
+        .form-group.row
+          label(class='col-sm-2 control-label', for='name') Nom
+          .col-sm-10
+            input.form-control(type='text', name='name', id='name', autofocus=true)
+        .form-group.row
+          label(class='col-sm-2 control-label', for='role') Position
+          .col-sm-10
+            select.form-control(name='role', id='role')
+              option(value="", selected)
+              for role in roles
+                option(value=role.value) #{role.name}
+        .form-group.row
+          label(class='col-sm-2 control-label', for='country') Pays
+          .col-sm-10
+            select.form-control(name='country', id='country')
+              for country in countries
+                option(value=country.value) #{country.name}
+        .form-group.row
+          label(class='col-sm-2 control-label', for='picture') Photo
+          .col-sm-10
+            input.form-control(type='text', name='picture', id='picture', accept='image/*')
+        .form-group.row
+          label.col-sm-2.control-label(for="team-region") Team
+          .col.sm-5
+            select.form-control(name="team-region", id="team-region", onchange="getRegionTeams(event, value)")
+              option(value="", disabled, selected)
+              for region in regions
+                option(value=region.value) #{region.name}
+          .col.sm-5
+            select#teamNames.form-control(name="team")
+              option(value="", selected, disabled)
+        .form-group.row
+          .col
+            .float-right
+              button.btn.btn-primary(type='submit')
+                i.fa.fa-envelope
+                | Enregistrer

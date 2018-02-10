@@ -7,14 +7,20 @@
 
   .collapse.navbar-collapse
     ul.navbar-nav.mr-auto
-      li.nav-item(class=(title === 'Home') ? 'active' : undefined)
-        a.nav-link(href='/') Home
-      li.nav-item(class=(title === 'Teams') ? 'active' : undefined)
-        a.nav-link(href='/teams') Teams
+      li.nav-item(class=(title === 'Equipes') ? 'active' : undefined)
+        a.nav-link(href='/teams') Equipes
       li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
         a.nav-link(href='/contact') Contact
-      li.nav-item
-        a.nav-link(href='/status') Status
+      if user
+        li.nav-item.dropdown(class=(title.indexOf('Ajouter') >= 0 ? 'active' : undefined))
+          a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            span Ajouter
+            i.caret
+          div.dropdown-menu
+            a.dropdown-item(href='/teams/new') Equipe
+            .dropdown-divider
+            a.dropdown-item(href='/players/new') Joueur
+
     ul.nav.navbar-nav
       if !user
         li.nav-item(class=(title === 'Login') ? 'active' : undefined)

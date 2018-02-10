@@ -1,3 +1,50 @@
-main {
-	margin-top: 5rem;
+main {margin-top: 5rem;}
+p {margin-bottom: 0;}
+img {vertical-align: middle; display: inline-block; max-width: 100%;}
+
+.avatar {
+	border-radius: 50%;
+	box-shadow: 0 2px 6px -1px rgba(0, 0, 0, .75);
+}
+.avatar-xs {width: 2rem; height: 2rem;}
+.avatar-sm {width: 3rem; height: 3rem;}
+.avatar-md {width: 5rem; height: 5rem;}
+.avatar-lg {width: 8rem; height: 8rem;}
+
+.nt-lollypop {
+	display: flex;
+	align-items: center;
+}
+.nt-lollypop_pop {
+	margin-right: 1rem;
+}
+
+.nt-bubbles {
+	display: flex;
+	justify-content: center;
+}
+.nt-bubble {
+	display: flex;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	align-items: center;
+	justify-content: center;
+	margin-right: .5rem;
+	box-shadow: 0 2px 6px -1px rgba(0, 0, 0, .75);
+}
+.nt-bubble img {
+	width: 1.2rem;
+}
+
+a.card {
+	color: inherit;
+	&:hover{
+		text-decoration: none;
+		box-shadow: 2px 2px 3px 0 rgba(133, 133, 133, .7);
+	}
+}
+.nt-flex-card {
+	display: flex;
+	justify-content: space-between;
 }

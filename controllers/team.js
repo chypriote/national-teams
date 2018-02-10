@@ -1,16 +1,19 @@
 const Team = require('../models/Team');
+const Player = require('../models/Player');
 
 /**
  * GET /teams
  * Teams page.
  */
 exports.getTeams = (req, res) => {
+  let team = new Team;
   Team.find({}, function (err, teams) {
     if (err) return next(err);
 
     res.render('teams/teams', {
-      title: 'Teams',
-      teams: teams
+      title: 'Equipes',
+      teams: teams,
+      regionInfos: team.regionInfos
     });
   });
 };
@@ -21,13 +24,15 @@ exports.getTeams = (req, res) => {
  */
 exports.getTeam = (req, res) => {
   const teamId = req.params.id;
+  let player = new Player;
   
   if (!teamId) res.redirect(index);
 
   Team.findOne({_id:teamId}, function (err, team) {
     res.render('teams/team', {
       title: team.name,
-      team: team
+      team: team,
+      countryCode: player.countryCodes
     });
   });
 };
@@ -73,5 +78,13 @@ exports.post = (req, res) => {
       if (err) return next(err);
       res.redirect('/teams/' + team._id);
     });
+  });
+};
+
+exports.getTeamsForRegion = (req, res) => {
+  const region = req.params.region;
+  Team.find({region: region}, (err, teams) => {
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(JSON.stringify(teams));
   });
 };

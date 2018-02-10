@@ -8,24 +8,19 @@ block content
   .row
     .col-sm-2.text-center
       img.avatar.avatar-lg(src='/assets/teams/' + team.logo)
+      .text-center.font-weight-bold #{team.regionName(team.region)}
     .col-sm-10
       .row
-        .col-sm-2
-          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5063_ddh_player_profile_image_medium.jpeg")
-          p.text-center.font-weight-bold Sendoo
-          .nt-bubbles
-            .nt-bubble
-              img(src="/assets/roles/top.png")
-            .nt-bubble
-              img(src="/assets/flags/fr.svg")
-        .col-sm-2
-          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5065_ddh_player_profile_image_medium.jpeg")
-        .col-sm-2
-          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5060_ddh_player_profile_image_medium.jpeg")
-        .col-sm-2
-          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5052_ddh_player_profile_image_medium.jpeg")
-        .col-sm-2
-          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5061_ddh_player_profile_image_medium.jpeg")
-        .col-sm-2
-          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5068_ddh_player_profile_image_medium.jpeg")
+        for player in team.players
+          .col-sm-2
+            if player.picture
+              img(style="max-height: 180px", src=player.picture)
+            else
+              img(style="max-height: 180px", src="http://pro.lvp.es/bundles/lvpinterface/pro/img/no-foto.jpg")
+            p.text-center.font-weight-bold #{player.name}
+            .nt-bubbles
+              .nt-bubble
+                img(src="/assets/roles/" + player.role + ".png")
+              .nt-bubble
+                i.flag-icon(class="flag-icon-" + countryCode(player.country))
 

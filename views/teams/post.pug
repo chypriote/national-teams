@@ -1,35 +1,39 @@
 extends ../layout
 
 block content
-    .page-header
+  .col-md-8.offset-md-2
+    .card
+      .card-header
         h3 Ajouter une équipe
 
-    form.col-md-10.col-md-offset-2(method='POST', enctype='multipart/form-data', action="/teams")
+      form.card-body(method='POST', enctype='multipart/form-data', action="/api/teams")
         input(type='hidden', name='_csrf', value=_csrf)
-        .form-group
-            label(class='col-sm-2 control-label', for='name') Nom
-            .col-sm-8
-                input.form-control(type='text', name='name', id='name', autofocus=true)
-        .form-group
-            label(class='col-sm-2 control-label', for='region') Region
-            .col-sm-8
-                select.form-control(name='region', id='region')
-                    option(value='france') Open Tour (FR)
-                    option(value='germany') ESL Meisterschaft (DE)
-                    option(value='united_kingdom') ESL Premiership (UK)
-                    option(value='spain') SuperLiga Orange (SP)
-                    option(value='portugal') Moche LPL (POR)
-                    option(value='italy') PG Nationals Predator (ITA)
-                    option(value='poland') ESL Mistrzostwa Polski (POL)
-                    option(value='nordic') Nordic Championship (NOR)
-                    option(value='cz_slovakia') Hitpoint Masters (CZK)
-                    option(value='balkan') Esports Balkan League (BLK)
-        .form-group
-            label(class='col-sm-2 control-label', for='logo') Logo
-            .col-sm-8
-                input(type='file', name='logo', id='logo', accept='image/*')
-        .form-group
-            .col-sm-offset-2.col-sm-8
-                button.btn.btn-primary(type='submit')
-                    i.fa.fa-envelope
-                    | Send
+        .form-group.row
+          label(class='col-sm-3 control-label', for='name') Nom
+          .col-sm-9
+            input.form-control(type='text', name='name', id='name', autofocus=true)
+        .form-group.row
+          label(class='col-sm-3 control-label', for='region') Region
+          .col-sm-9
+            select.form-control(name='region', id='region')
+              option(value='france') Open Tour (FR)
+              option(value='germany') ESL Meisterschaft (DE)
+              option(value='united_kingdom') ESL Premiership (UK)
+              option(value='spain') SuperLiga Orange (SP)
+              option(value='portugal') Moche LPL (POR)
+              option(value='italy') PG Nationals Predator (ITA)
+              option(value='poland') ESL Mistrzostwa Polski (POL)
+              option(value='nordic') Nordic Championship (NOR)
+              option(value='cz_slovakia') Hitpoint Masters (CZK)
+              option(value='balkan') Esports Balkan League (BLK)
+        .form-group.row
+          label(class='col-sm-3 control-label', for='logo') Logo
+          .col-sm-9
+            input(type='file', name='logo', id='logo', accept='image/*', onchange="previewFile(event)")
+            img#output(style="max-height:200px")
+        .form-group.row
+          .col
+            .float-right
+              button.btn.btn-primary(type='submit')
+                i.fa.fa-envelope
+                | Enregistrer

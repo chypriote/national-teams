@@ -1,19 +1,22 @@
 extends ../layout
 
 block content
-  h2 Teams
+  h2 Equipes
     a.float-right.btn.btn-primary(href='/teams/new') Ajouter une équipe
   hr
 
   each team in teams
-    a.row(href='/teams/' + team.id)
-      .col-sm-4
+    a.card(href='/teams/' + team.id)
+      .card-body.nt-flex-card
         .nt-lollypop
           .nt-lollypop_pop
             img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
           .nt-lollypop_stick
-            p #{team.name}
-      .col-sm-4
-        p #{team.region}
-    hr
-  .col
+            h3 #{team.name}
+        -var region = regionInfos(team.region)
+        .nt-lollypop
+          .nt-lollypop_pop
+            img.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
+          .nt-lollypop_stick
+            p #{region.name}
+    br

@@ -1,11 +1,11 @@
-var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')({
+const gulp = require('gulp');
+const plugins = require('gulp-load-plugins')({
 			pattern: ['gulp-*', 'gulp.*'],
 			replaceString: /\bgulp[\-.]/
 		});
-var autoprefixer = require('autoprefixer');
-var cssnext = require('cssnext');
-var browserSync = require('browser-sync');
+const autoprefixer = require('autoprefixer');
+const cssnext = require('cssnext');
+const browserSync = require('browser-sync');
 
 gulp.task('browser-sync', function() {
 	browserSync({
@@ -24,13 +24,13 @@ gulp.task('images', function(){
 		.pipe(gulp.dest('public/images/'));
 });
 
-gulp.task('styles', function(){
-	var postcssPlugins = [
-        autoprefixer({browsers: ['last 1 version']}),
-		cssnext
-	];
+gulp.task('styles', () => {
+  const postcssPlugins = [
+    autoprefixer({browsers: ['last 1 version']}),
+    cssnext
+  ];
 
-	gulp.src(['styles/main*.scss'])
+  gulp.src(['styles/main*.scss'])
 		.pipe(plugins.plumber({
 			errorHandler: function (error) {
 				console.log(error.message);

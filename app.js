@@ -27,11 +27,6 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
 dotenv.load({ path: '.env.example' });
 
 /**
- * Controllers (route handlers).
- */
-const teamController = require('./controllers/team');
-
-/**
  * Create Express server.
  */
 const app = express();
@@ -78,7 +73,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/api/upload' || req.path === '/teams') {
+  if (req.path === '/api/upload' || req.path === '/api/teams') {
     next();
   } else {
     lusca.csrf()(req, res, next);
@@ -112,11 +107,19 @@ require('./routing')(app);
 /**
  * Front routes
  */
+
+const teamController = require('./controllers/team');
+app.get('/', teamController.getTeams);
 app.get('/teams', teamController.getTeams);
 app.get('/teams/new', teamController.postTeam);
 app.get('/teams/:id', teamController.getTeam);
 const logoStorage = multer.diskStorage({destination: path.join(__dirname, 'uploads/teams'), filename: function (req, file, cb) {cb(null, file.originalname)}});
-app.post('/teams', multer({storage: logoStorage}).single('logo'), teamController.post);
+app.post('/api/teams', multer({storage: logoStorage}).single('logo'), teamController.post);
+app.get('/api/teams/:region', teamController.getTeamsForRegion);
+
+const playerController = require('./controllers/player');
+app.get('/players/new', playerController.postPlayer);
+app.post('/api/players', playerController.post);
 
 /**
  * Error Handler.

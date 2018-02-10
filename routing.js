@@ -2,11 +2,9 @@ module.exports = function(app) {
   const passport = require('passport');
   const passportConfig = require('./config/passport');
 
-  const homeController = require('./controllers/home');
   const userController = require('./controllers/user');
   const contactController = require('./controllers/contact');
 
-  app.get('/', homeController.index);
   app.get('/login', userController.getLogin);
   app.post('/login', userController.postLogin);
   app.get('/logout', userController.logout);
