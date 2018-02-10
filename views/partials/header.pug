@@ -1,0 +1,34 @@
+.navbar.navbar-expand-lg.navbar-light.bg-light
+  a.navbar-brand(href='/')
+    i.fa.fa-cube
+    | National Teams
+  button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-toggler')
+    span.navbar-toggler-icon
+
+  .collapse.navbar-collapse
+    ul.navbar-nav.mr-auto
+      li.nav-item(class=(title === 'Home') ? 'active' : undefined)
+        a.nav-link(href='/') Home
+      li.nav-item(class=(title === 'Teams') ? 'active' : undefined)
+        a.nav-link(href='/teams') Teams
+      li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
+        a.nav-link(href='/contact') Contact
+      li.nav-item
+        a.nav-link(href='/status') Status
+    ul.nav.navbar-nav
+      if !user
+        li.nav-item(class=(title === 'Login') ? 'active' : undefined)
+          a.nav-link(href='/login') Login
+        li.nav-item(class=(title === 'Create Account') ? 'active' : undefined)
+          a.nav-link(href='/signup') Create Account
+      else
+        li.nav-item.dropdown(class=(title === 'Account Management') ? 'active' : undefined)
+          a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            if user.profile.picture
+              img(src=user.profile.picture)
+            span= user.profile.name || user.email || user.id
+            i.caret
+          div.dropdown-menu
+            a.dropdown-item(href='/account') My Account
+            .dropdown-divider
+            a.dropdown-item(href='/logout') Logout
