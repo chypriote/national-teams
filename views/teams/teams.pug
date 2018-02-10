@@ -2,13 +2,18 @@ extends ../layout
 
 block content
   h2 Teams
+    a.float-right.btn.btn-primary(href='/teams/new') Ajouter une équipe
   hr
 
-  .row
-    .col-sm-4
-      p Display Teams
-    .col-sm-4
-      p Team 1
-
-    .col
-      a.btn.btn-primary(href='/teams/new') Ajouter une équipe
+  each team in teams
+    a.row(href='/teams/' + team.id)
+      .col-sm-4
+        .nt-lollypop
+          .nt-lollypop_pop
+            img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
+          .nt-lollypop_stick
+            p #{team.name}
+      .col-sm-4
+        p #{team.region}
+    hr
+  .col

@@ -1,11 +1,31 @@
 extends ../layout
 
 block content
-  h2 Team #{id}
+  h2 #{team.name}
+    a.float-right.btn.btn-primary(href='/teams') Retour
   hr
 
   .row
-    .col-sm-4
-      p Display Teams
-    .col-sm-4
-      p Team 1
+    .col-sm-2.text-center
+      img.avatar.avatar-lg(src='/assets/teams/' + team.logo)
+    .col-sm-10
+      .row
+        .col-sm-2
+          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5063_ddh_player_profile_image_medium.jpeg")
+          p.text-center.font-weight-bold Sendoo
+          .nt-bubbles
+            .nt-bubble
+              img(src="/assets/roles/top.png")
+            .nt-bubble
+              img(src="/assets/flags/fr.svg")
+        .col-sm-2
+          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5065_ddh_player_profile_image_medium.jpeg")
+        .col-sm-2
+          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5060_ddh_player_profile_image_medium.jpeg")
+        .col-sm-2
+          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5052_ddh_player_profile_image_medium.jpeg")
+        .col-sm-2
+          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5061_ddh_player_profile_image_medium.jpeg")
+        .col-sm-2
+          img(src="https://s3-eu-west-1.amazonaws.com/lvp-ddh/ddh_player_profile_image/0001/06/thumb_5068_ddh_player_profile_image_medium.jpeg")
+

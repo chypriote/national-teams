@@ -1,4 +1,4 @@
-.navbar.navbar-expand-lg.navbar-light.bg-light
+.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
   a.navbar-brand(href='/')
     i.fa.fa-cube
     | National Teams
@@ -25,7 +25,7 @@
         li.nav-item.dropdown(class=(title === 'Account Management') ? 'active' : undefined)
           a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             if user.profile.picture
-              img(src=user.profile.picture)
+              img.avatar.avatar-xs.mr-2(src=user.profile.picture)
             span= user.profile.name || user.email || user.id
             i.caret
           div.dropdown-menu

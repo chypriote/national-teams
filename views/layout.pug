@@ -9,7 +9,7 @@ html
     title #{title} - National Teams
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css')
-    link(rel='stylesheet', href="css/main.css")
+    link(rel='stylesheet', href="/css/main.css")
 
   body
     include partials/header
@@ -17,8 +17,6 @@ html
     main.container
       include partials/flash
       block content
-
-    include partials/footer
 
     script(src="//code.jquery.com/jquery-3.2.1.slim.min.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js")

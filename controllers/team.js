@@ -1,10 +1,17 @@
+const Team = require('../models/Team');
+
 /**
  * GET /teams
  * Teams page.
  */
 exports.getTeams = (req, res) => {
-  res.render('teams/teams', {
-    title: 'Teams'
+  Team.find({}, function (err, teams) {
+    if (err) return next(err);
+
+    res.render('teams/teams', {
+      title: 'Teams',
+      teams: teams
+    });
   });
 };
 
@@ -17,14 +24,16 @@ exports.getTeam = (req, res) => {
   
   if (!teamId) res.redirect(index);
 
-  res.render('teams/team', {
-    title: 'Team',
-    id: teamId
+  Team.findOne({_id:teamId}, function (err, team) {
+    res.render('teams/team', {
+      title: team.name,
+      team: team
+    });
   });
 };
 
 /**
- * GET /team/new
+ * GET /teams/new
  * Post team page.
  */
 exports.postTeam = (req, res) => {
@@ -42,12 +51,27 @@ exports.post = (req, res) => {
   req.assert('region', 'Region cannot be blank').notEmpty();
 
   const errors = req.validationErrors();
-
   if (errors) {
     req.flash('errors', errors);
     return res.redirect('/teams/new');
   }
 
-  req.flash('success', { msg: 'Team has been posted successfully!' });
-  res.redirect('/teams');
+  const team = new Team({
+    name: req.body.name,
+    region: req.body.region,
+    logo: req.file.filename
+  });
+
+  Team.findOne({name: req.body.name}, (err, existingTeam) => {
+    if (err) return next(err);
+    if (existingTeam) {
+      req.flash('errors', { msg: 'A team with that name already exists.' });
+      return res.redirect('/teams/new');
+    }
+
+    team.save((err, team) => {
+      if (err) return next(err);
+      res.redirect('/teams/' + team._id);
+    });
+  });
 };
