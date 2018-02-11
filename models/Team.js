@@ -25,18 +25,18 @@ teamSchema.pre('save', function save(next) {
 
 teamSchema.methods.availableRegions = () => {
   return [
-    {value: 'france', name: 'Open Tour (FR)', logo: 'fr'},
+    {value: 'turkey', name: 'Türkiye Şampiyonluk Ligi (TR)', logo: 'tcl'},
+    {value: 'russia', name: 'LoL Continental League (RUS)', logo: 'lcl'},
+    {value: 'spain', name: 'SuperLiga Orange (ESP)', logo: 'esp'},
     {value: 'germany', name: 'ESL Meisterschaft (DE)', logo: 'de'},
     {value: 'united_kingdom', name: 'ESL Premiership (UK)', logo: 'uk'},
-    {value: 'spain', name: 'SuperLiga Orange (ESP)', logo: 'esp'},
     {value: 'portugal', name: 'Moche LPL (POR)', logo: 'por'},
     {value: 'italy', name: 'PG Nationals Predator (ITA)', logo: 'ita'},
     {value: 'poland', name: 'ESL Mistrzostwa Polski (POL)', logo: 'pol'},
     {value: 'nordic', name: 'Nordic Championship (NOR)', logo: 'nor'},
-    {value: 'cz_slovakia', name: 'Hitpoint Masters (CZK)', logo: 'czs'},
     {value: 'balkan', name: 'Esports Balkan League (BLK)', logo: 'blk'},
-    {value: 'turkey', name: 'Türkiye Şampiyonluk Ligi (TR)', logo: 'tcl'},
-    {value: 'russia', name: 'LoL Continental League (RUS)', logo: 'lcl'},
+    {value: 'cz_slovakia', name: 'Hitpoint Masters (CZK)', logo: 'czs'},
+    {value: 'france', name: 'Open Tour (FR)', logo: 'fr'},
   ];
 };
 

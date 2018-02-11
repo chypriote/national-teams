@@ -46,18 +46,19 @@ gulp.task('build', function(){
 
 });
 
-// gulp.task('scripts', function(){
-// 	gulp.src(['public/js/**/*.js'])
-// 		.pipe(plugins.plumber({
-// 			errorHandler: function (error) {
-// 				console.log(error.message);
-// 				this.emit('end');
-// 		}}))
-// 		.pipe(browserSync.reload({stream:true}));
-// });
+gulp.task('scripts', function(){
+	gulp.src(['scripts/*.js'])
+		.pipe(plugins.plumber({
+			errorHandler: function (error) {
+				console.log(error.message);
+				this.emit('end');
+		}}))
+    .pipe(gulp.dest('public/js/'))
+		.pipe(browserSync.reload({stream:true}));
+});
 
 gulp.task('default', ['browser-sync'], function(){
-	// gulp.watch("public/js/**/*.js", ['scripts']);
+	gulp.watch("scripts/**/*.js", ['scripts']);
 	gulp.watch("styles/**/*.scss", ['styles']);
 	gulp.watch("views/**/*.pug", ['reload']);
 });

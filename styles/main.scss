@@ -11,6 +11,10 @@ img {vertical-align: middle; display: inline-block; max-width: 100%;}
 	&.avatar-lg {width: 8rem; height: 8rem;}
 }
 
+button.dropdown-item {
+	cursor: pointer;
+}
+
 .nt-lollypop {
 	display: flex;
 	align-items: center;

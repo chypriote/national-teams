@@ -7,12 +7,13 @@ const Player = require('../models/Player');
  */
 exports.getTeams = (req, res, next) => {
   let team = new Team;
-  Team.find({}, function (err, teams) {
+  Team.find({}).sort({name: 1}).exec((err, teams) => {
     if (err) return next(err);
 
     res.render('teams/teams', {
       title: 'Equipes',
       teams: teams,
+      regions: team.availableRegions(),
       regionInfos: team.regionInfos
     });
   });

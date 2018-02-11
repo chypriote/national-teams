@@ -5,18 +5,35 @@ block content
     a.float-right.btn.btn-primary(href='/teams/new') Ajouter une équipe
   hr
 
+  .row
+    .col-sm-4.offset-sm-8
+      .dropdown
+        button.btn.nt-lollypop.float-right.dropdown-toggle(type="button", id="regionSelect", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+          img.nt-lollypop_pop.avatar.avatar-xs(src='/assets/regions/worlds.png')
+          p.nt-lollypop_stick.text-truncate Toutes les régions
+        .dropdown-menu.dropdown-menu-right(aria-labelledby="regionSelect")
+          button.dropdown-item.nt-lollypop(data-filter="all")
+            img.nt-lollypop_pop.avatar.avatar-xs(src='/assets/regions/worlds.png')
+            p.nt-lollypop_stick.text-truncate Toutes les régions
+          each region in regions
+            button.dropdown-item.nt-lollypop(data-filter=region.value)
+              img.nt-lollypop_pop.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
+              p.nt-lollypop_stick.text-truncate #{region.name}
+  br
+
   each team in teams
-    a.card(href='/teams/' + team.id)
-      .card-body.nt-flex-card
-        .nt-lollypop
-          .nt-lollypop_pop
-            img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
-          .nt-lollypop_stick
-            h3 #{team.name}
-        -var region = regionInfos(team.region)
-        .nt-lollypop
-          .nt-lollypop_pop
-            img.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
-          .nt-lollypop_stick
-            p #{region.name}
-    br
+    -var region = regionInfos(team.region)
+    div(data-region=region.value)
+      a.card(href='/teams/' + team.id)
+        .card-body.nt-flex-card
+          .nt-lollypop
+            .nt-lollypop_pop
+              img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
+            .nt-lollypop_stick
+              h3 #{team.name}
+          .nt-lollypop
+            .nt-lollypop_pop
+              img.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
+            .nt-lollypop_stick
+              p #{region.name}
+      br
