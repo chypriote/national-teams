@@ -37,8 +37,9 @@ teamSchema.methods.availableRegions = () => {
     {value: 'balkan', name: 'Esports Balkan League (BLK)', logo: 'blk'},
     {value: 'cz_slovakia', name: 'Hitpoint Masters (CZK)', logo: 'czs'},
     {value: 'france', name: 'Open Tour (FR)', logo: 'fr'},
-    {value: 'denmark', name: 'League Championship Denmark (LCD)', logo: 'dk'},
-    {value: 'denmark', name: 'Challenger Series Denmark (CSD)', logo: 'dk'},
+    {value: 'denmark', name: 'League Championship Denmark (DK)', logo: 'dk'},
+    {value: 'denmark2', name: 'Challenger Series Denmark (DK)', logo: 'dk'},
+    {value: 'benelux', name: 'ESL Benelux Championship (BNL)', logo: 'bnl'},
   ];
 };
 
@@ -75,7 +76,11 @@ teamSchema.methods.regionName = function (region) {
     case 'russia':
       return 'LoL Continental League';
     case 'denmark':
+      return 'League Championship Denmark';
+    case 'denmark2':
       return 'Challenger Series Denmark';
+    case 'benelux':
+      return 'ESL Benelux Championship';
     default:
       return;
   }
