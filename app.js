@@ -114,6 +114,11 @@ const playerController = require('./controllers/player');
 app.get('/players/new', playerController.postPlayer);
 app.post('/api/players', playerController.post);
 
+const leagueController = require('./controllers/league');
+app.get('/leagues', leagueController.getLeagues);
+app.get('/leagues/new', leagueController.postLeague);
+app.get('/leagues/:id', leagueController.getLeague);
+
 /**
  * Error Handler.
  */

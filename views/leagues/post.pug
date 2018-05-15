@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+  .col-md-8.offset-md-2
+    .card
+      .card-header
+        h3 Ajouter une league
+
+      form.card-body(method='POST', enctype='multipart/form-data', action="/api/leagues")
+        input(type='hidden', name='_csrf', value=_csrf)
+        .form-group.row
+          label(class='col-sm-3 control-label', for='name') Nom
+          .col-sm-9
+            input.form-control(type='text', name='name', id='name', autofocus=true)
+        .form-group.row
+          label(class='col-sm-3 control-label', for='country') Pays
+          .col-sm-9
+            select.form-control(name='country', id='country')
+              for country in countries
+                option(value=country.code) #{country.name}
+        .form-group.row
+          label(class='col-sm-3 control-label', for='logo') Logo
+          .col-sm-9
+            input(type='file', name='logo', id='logo', accept='image/*', onchange="previewFile(event)")
+            img#output(style="max-height:200px")
+        .form-group.row
+          .col
+            .float-right
+              button.btn.btn-primary(type='submit')
+                i.fa.fa-envelope
+                | Enregistrer

@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+    h2 Leagues
+        a.float-right.btn.btn-primary(href='/leagues/new') Ajouter une league
+    hr
+
+    each league in leagues
+        -var region = regionInfos(team.region)
+        div(data-region=region.value)
+            a.card(href='/teams/' + team.id)
+                .card-body.nt-flex-card
+                    .nt-lollypop
+                        .nt-lollypop_pop
+                            img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
+                        .nt-lollypop_stick
+                            h3 #{team.name}
+                    .nt-lollypop
+                        .nt-lollypop_pop
+                            img.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
+                        .nt-lollypop_stick
+                            p #{region.name}
+            br
