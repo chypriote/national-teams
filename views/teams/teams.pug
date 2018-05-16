@@ -15,25 +15,27 @@ block content
           button.dropdown-item.nt-lollypop(data-filter="all")
             img.nt-lollypop_pop.avatar.avatar-xs(src='/assets/regions/worlds.png')
             p.nt-lollypop_stick.text-truncate Toutes les régions
-          each region in regions
-            button.dropdown-item.nt-lollypop(data-filter=region.value)
-              img.nt-lollypop_pop.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
-              p.nt-lollypop_stick.text-truncate #{region.name}
+          // each region in regions
+          //   button.dropdown-item.nt-lollypop(data-filter=region.value)
+          //     img.nt-lollypop_pop.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
+          //     p.nt-lollypop_stick.text-truncate #{region.name}
   br
 
   each team in teams
     -var region = regionInfos(team.region)
-    div(data-region=region.value)
-      a.card(href='/teams/' + team.id)
-        .card-body.nt-flex-card
-          .nt-lollypop
-            .nt-lollypop_pop
-              img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
-            .nt-lollypop_stick
-              h3 #{team.name}
-          .nt-lollypop
-            .nt-lollypop_pop
-              img.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
-            .nt-lollypop_stick
-              p #{region.name}
-      br
+      #{team}
+    div.row
+      .col.col-12
+        a.card(href='/teams/' + team.id)
+          .card-body.nt-flex-card
+            .nt-lollypop
+              .nt-lollypop_pop
+                img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
+              .nt-lollypop_stick
+                h3 #{team.name}
+            //.nt-lollypop
+            //  .nt-lollypop_pop
+            //    img.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
+            //  .nt-lollypop_stick
+            //    p #{region.name}
+        br

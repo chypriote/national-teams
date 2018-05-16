@@ -16,8 +16,8 @@ block content
           label(class='col-sm-3 control-label', for='region') Region
           .col-sm-9
             select.form-control(name='region', id='region')
-              for region in regions
-                option(value=region.value) #{region.name}
+              for region in leagues
+                option(value=region.id) #{region.name}
         .form-group.row
           label(class='col-sm-3 control-label', for='logo') Logo
           .col-sm-9

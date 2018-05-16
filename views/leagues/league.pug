@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+  h2 #{league.name}
+    .nt-btn-bar.float-right
+      if user && !teams.length
+        button.btn.btn-danger(onclick="deleteLeague('"+league.id+"')") Supprimer
+      a.btn.btn-primary(href='/leagues') Retour
+  hr
+
+  .row
+    .col-sm-3.text-center
+      .row
+        .col.col-12
+          img.avatar.avatar-lg(src='/assets/leagues/' + league.logo)
+        .col.col-12.nt-bubbles
+          for country in league.countries
+            .nt-bubble
+              i.flag-icon(class="flag-icon-" + country.toLowerCase())
+        .col.col-12
+          .text-center #{league.website}
+        .col.col-12
+          .text-center #{league.leaguepedia}
+    .col-sm-9
+      .row
+        for team in teams
+          div.col.col-12
+            a.card(href='/teams/' + team.id)
+              .card-body.nt-flex-card
+                .nt-lollypop
+                  .nt-lollypop_pop
+                    img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
+                  .nt-lollypop_stick
+                    h3 #{team.name}
+            br
+

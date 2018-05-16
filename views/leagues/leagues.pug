@@ -6,18 +6,16 @@ block content
     hr
 
     each league in leagues
-        -var region = regionInfos(team.region)
-        div(data-region=region.value)
-            a.card(href='/teams/' + team.id)
+        div
+            a.card(href='/leagues/' + league.id)
                 .card-body.nt-flex-card
                     .nt-lollypop
                         .nt-lollypop_pop
-                            img.avatar.avatar-sm(src='/assets/teams/' + team.logo)
+                            img.avatar.avatar-sm(src='/assets/leagues/' + league.logo)
                         .nt-lollypop_stick
-                            h3 #{team.name}
-                    .nt-lollypop
-                        .nt-lollypop_pop
-                            img.avatar.avatar-xs(src='/assets/regions/' + region.logo + '.png')
-                        .nt-lollypop_stick
-                            p #{region.name}
+                            h3 #{league.name}
+                    for country in league.countries
+                        .nt-bubbles
+                            .nt-bubble
+                               i.flag-icon(class="flag-icon-" + country.toLowerCase())
             br

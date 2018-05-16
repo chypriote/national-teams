@@ -4,9 +4,9 @@ const countryList = require('country-list')();
 
 const leagueSchema = new mongoose.Schema({
 	name: { type: String, unique: true },
-	country: String,
 	logo: String,
 
+	countries: [],
 	teams: [],
 
 	website: String,

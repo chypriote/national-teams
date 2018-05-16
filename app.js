@@ -99,14 +99,15 @@ require('./routing')(app);
 /**
  * Front routes
  */
+const teamLogoStorage = multer.diskStorage({destination: path.join(__dirname, 'uploads/teams'), filename: function (req, file, cb) {cb(null, file.originalname)}});
+const leagueLogoStorage = multer.diskStorage({destination: path.join(__dirname, 'uploads/leagues'), filename: function (req, file, cb) {cb(null, file.originalname)}});
 
 const teamController = require('./controllers/team');
 app.get('/', teamController.getTeams);
 app.get('/teams', teamController.getTeams);
 app.get('/teams/new', teamController.postTeam);
 app.get('/teams/:id', teamController.getTeam);
-const logoStorage = multer.diskStorage({destination: path.join(__dirname, 'uploads/teams'), filename: function (req, file, cb) {cb(null, file.originalname)}});
-app.post('/api/teams', multer({storage: logoStorage}).single('logo'), teamController.post);
+app.post('/api/teams', multer({storage: teamLogoStorage}).single('logo'), teamController.post);
 app.delete('/api/teams/:id', teamController.deleteTeam);
 app.get('/api/teams/:region', teamController.getTeamsForRegion);
 
@@ -118,6 +119,7 @@ const leagueController = require('./controllers/league');
 app.get('/leagues', leagueController.getLeagues);
 app.get('/leagues/new', leagueController.postLeague);
 app.get('/leagues/:id', leagueController.getLeague);
+app.post('/api/leagues', multer({storage: leagueLogoStorage}).single('logo'), leagueController.post);
 
 /**
  * Error Handler.

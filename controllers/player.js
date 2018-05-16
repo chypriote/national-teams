@@ -41,11 +41,11 @@ exports.post = (req, res) => {
 
     player.save((err, player) => {
       if (err) return next(err);
-      Team.update({_id: req.body.team}, {$push: {'players': player}}, (err, team) => {
+      Team.update({_id: req.body.team}, {$push: {'players': player}}, (err) => {
         if (err) return next(err);
 
         req.flash('success', { msg: 'Player was successfully added.' });
-        res.redirect('/players/new');
+        return res.redirect('/players/new');
       });
     });
   });

@@ -13,9 +13,9 @@ block content
           .col-sm-9
             input.form-control(type='text', name='name', id='name', autofocus=true)
         .form-group.row
-          label(class='col-sm-3 control-label', for='country') Pays
+          label(class='col-sm-3 control-label', for='countries') Pays
           .col-sm-9
-            select.form-control(name='country', id='country')
+            select.form-control(name='countries', id='countries', multiple)
               for country in countries
                 option(value=country.code) #{country.name}
         .form-group.row

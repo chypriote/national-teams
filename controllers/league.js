@@ -1,5 +1,6 @@
 const League = require('../models/League');
-const Player = require('../models/Player');
+const Team = require('../models/Team');
+const countryList = require('country-list')();
 
 /**
  * GET /leagues
@@ -23,14 +24,18 @@ exports.getLeagues = (req, res, next) => {
  */
 exports.getLeague = (req, res) => {
 	const leagueId = req.params.id;
-	let player = new Player;
 	if (!leagueId) res.redirect(index);
 
 	League.findOne({_id:leagueId}, function (err, league) {
-		res.render('leagues/league', {
-			title: league.name,
-			league: league,
-			countryCode: player.countryCodes
+		Team.find({leagueId: league._id}).sort({name: 1}).limit(10).exec((err, teams) => {
+			if (err) return next(err);
+
+			res.render('leagues/league', {
+				title: league.name,
+				league: league,
+				teams: teams,
+				countryCode: countryList.getCode
+			});
 		});
 	});
 };
@@ -66,7 +71,7 @@ exports.post = (req, res, next) => {
 
 	const league = new League({
 		name: req.body.name,
-		country: req.body.country,
+		countries: req.body.countries,
 		logo: req.file.filename
 	});
 
