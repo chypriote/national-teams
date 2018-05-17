@@ -1,5 +1,4 @@
 const League = require('../models/League');
-const Team = require('../models/Team');
 const countryList = require('country-list')();
 
 /**
@@ -7,14 +6,14 @@ const countryList = require('country-list')();
  * Leagues page.
  */
 exports.getLeagues = (req, res, next) => {
-	League.find({}).sort({name: 1}).exec((err, leagues) => {
-		if (err) return next(err);
+  League.find({}).sort({ name: 1 }).exec((err, leagues) => {
+    if (err) return next(err);
 
-		res.render('leagues/leagues', {
-			title: 'Leagues',
-			leagues: leagues
-		});
-	});
+    res.render('leagues/leagues', {
+      title: 'Leagues',
+      leagues,
+    });
+  });
 };
 
 /**
@@ -22,19 +21,19 @@ exports.getLeagues = (req, res, next) => {
  * League page.
  */
 exports.getLeague = (req, res, next) => {
-	const leagueId = req.params.id;
-	if (!leagueId) res.redirect(index);
+  const leagueId = req.params.id;
+  if (!leagueId) res.redirect('index');
 
-	League.findOne({_id:leagueId}).exec((err, league) => {
-		if (err) return next(err);
+  League.findOne({ _id: leagueId }).exec((err, league) => {
+    if (err) return next(err);
 
-		res.render('leagues/league', {
-			title: league.name,
-			league: league,
-			teams: league.teams,
-			countryCode: countryList.getCode
-		});
-	});
+    res.render('leagues/league', {
+      title: league.name,
+      league,
+      teams: league.teams,
+      countryCode: countryList.getCode,
+    });
+  });
 };
 
 /**
@@ -42,11 +41,11 @@ exports.getLeague = (req, res, next) => {
  * Post team page.
  */
 exports.postLeague = (req, res) => {
-	let league = new League;
-	res.render('leagues/post', {
-		title: 'Add a league',
-		countries: league.availableCountries(),
-	});
+  const league = new League();
+  res.render('leagues/post', {
+    title: 'Add a league',
+    countries: league.availableCountries(),
+  });
 };
 
 /**
@@ -54,39 +53,39 @@ exports.postLeague = (req, res) => {
  * League create.
  */
 exports.post = (req, res, next) => {
-	req.assert('name', 'Name cannot be blank').notEmpty();
-	req.assert('countries', 'Countries cannot be empty').notEmpty();
+  req.assert('name', 'Name cannot be blank').notEmpty();
+  req.assert('countries', 'Countries cannot be empty').notEmpty();
 
-	const errors = req.validationErrors();
-	if (errors) {
-		req.flash('errors', errors);
-		return res.redirect('/leagues/new');
-	}
-	if (req.file === undefined) {
-		req.flash('errors', { msg: 'Logo cannot be empty.' });
-		return res.redirect('/leagues/new');
-	}
+  const errors = req.validationErrors();
+  if (errors) {
+    req.flash('errors', errors);
+    return res.redirect('/leagues/new');
+  }
+  if (req.file === undefined) {
+    req.flash('errors', { msg: 'Logo cannot be empty.' });
+    return res.redirect('/leagues/new');
+  }
 
-	const league = new League({
-		name: req.body.name,
-		countries: req.body.countries,
-		logo: req.file.filename,
-		leaguepedia: req.body.leaguepedia,
-		website: req.body.website,
-	});
+  const league = new League({
+    name: req.body.name,
+    countries: req.body.countries,
+    logo: req.file.filename,
+    leaguepedia: req.body.leaguepedia,
+    website: req.body.website,
+  });
 
-	league.save((err, team) => {
-		if (err) {
-			if (err.code && err.code === 11000) {
-				req.flash('errors', { msg: 'League name already exists.' });
-				return res.redirect('/leagues/new');
-			}
+  league.save((err, team) => {
+    if (err) {
+      if (err.code && err.code === 11000) {
+        req.flash('errors', { msg: 'League name already exists.' });
+        return res.redirect('/leagues/new');
+      }
 
-			return next(err);
-		}
+      return next(err);
+    }
 
-		return res.redirect('/leagues/' + team._id);
-	});
+    return res.redirect(`/leagues/${team._id}`);
+  });
 };
 
 /**
@@ -94,14 +93,14 @@ exports.post = (req, res, next) => {
  * League delete.
  */
 exports.deleteLeague = (req, res, next) => {
-	const leagueId = req.params.id;
-	if (!leagueId) res.redirect(index);
+  const leagueId = req.params.id;
+  if (!leagueId) res.redirect('index');
 
-	League.remove({_id:leagueId}, function (err) {
-		if (err) return next(err);
-		req.flash('errors', { msg: 'The league was successfully deleted.' });
-		res.send(204);
-	});
+  League.remove({ _id: leagueId }, (err) => {
+    if (err) return next(err);
+    req.flash('errors', { msg: 'The league was successfully deleted.' });
+    res.send(204);
+  });
 };
 
 /**
@@ -109,9 +108,9 @@ exports.deleteLeague = (req, res, next) => {
  * League teams.
  */
 exports.getTeamsForLeague = (req, res) => {
-	const league = req.params.id;
-	League.findOne({_id:league}, (err, league) => {
-		res.setHeader('Content-Type', 'application/json');
-		return res.send(JSON.stringify(league.teams));
-	});
+  const league = req.params.id;
+  League.findOne({ _id: league }, (err, league) => {
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(JSON.stringify(league.teams));
+  });
 };

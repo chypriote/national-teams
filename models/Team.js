@@ -5,7 +5,7 @@ const teamSchema = new mongoose.Schema({
   logo: String,
 
   league: {
-  	type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'League',
     require: true,
   },
@@ -13,7 +13,6 @@ const teamSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 teamSchema.pre('save', function save(next) {
-  const team = this;
   next();
 });
 

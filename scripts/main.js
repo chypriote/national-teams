@@ -1,9 +1,9 @@
 function previewFile() {
   const preview = document.getElementById('output');
-  const file    = document.querySelector('input[type=file]').files[0];
-  const reader  = new FileReader();
+  const file = document.querySelector('input[type=file]').files[0];
+  const reader = new FileReader();
 
-  reader.addEventListener("load", function () {
+  reader.addEventListener('load', () => {
     preview.src = reader.result;
   }, false);
 
@@ -14,13 +14,13 @@ function previewFile() {
 
 function getLeagueTeams(event, league) {
   event.preventDefault();
-  fetch('/api/leagues/' + league + '/teams').then(function (response) {return response.json();})
-    .then(function (response) {
+  fetch(`/api/leagues/${league}/teams`).then(response => response.json())
+    .then((response) => {
       const select = document.getElementById('teamNames');
       select.options.length = 0;
 
-      response.forEach(function (elem) {
-        let option = document.createElement('option');
+      response.forEach((elem) => {
+        const option = document.createElement('option');
         option.text = elem.name;
         option.value = elem._id;
         select.add(option);
@@ -29,7 +29,7 @@ function getLeagueTeams(event, league) {
 }
 
 function deleteTeam(teamId) {
-  fetch('/api/teams/' + teamId, {method: 'delete'}).then(function () {
+  fetch(`/api/teams/${teamId}`, { method: 'delete' }).then(() => {
     window.location = '/';
   });
 }
@@ -37,12 +37,11 @@ function deleteTeam(teamId) {
 $('#countries').select2();
 
 $('button[data-filter]').click(function () {
-  let league = $(this).attr('data-filter');
+  const league = $(this).attr('data-filter');
   $('#leagueSelect').html($(this).html());
 
-  if (league === 'all')
-    return $('[data-league]').fadeIn("fast");
+  if (league === 'all') { return $('[data-league]').fadeIn('fast'); }
 
   $('[data-league]').hide();
-  $('[data-league][data-league="'+league+'"]').fadeIn("fast");
+  $(`[data-league][data-league="${league}"]`).fadeIn('fast');
 });

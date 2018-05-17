@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function (app) {
   const passport = require('passport');
   const passportConfig = require('./config/passport');
 
@@ -24,7 +24,7 @@ module.exports = function(app) {
   app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
   app.get('/auth/twitter', passport.authenticate('twitter'));
-  app.get('/auth/twitter/callback', passport.authenticate('twitter', {failureRedirect: '/login'}), (req, res) => {
+  app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
     res.redirect(req.session.returnTo || '/');
   });
 };

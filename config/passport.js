@@ -1,5 +1,4 @@
 const passport = require('passport');
-const request = require('request');
 const LocalStrategy = require('passport-local').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 
@@ -55,7 +54,7 @@ passport.use(new TwitterStrategy({
   consumerKey: process.env.TWITTER_KEY,
   consumerSecret: process.env.TWITTER_SECRET,
   callbackURL: '/auth/twitter/callback',
-  passReqToCallback: true
+  passReqToCallback: true,
 }, (req, accessToken, tokenSecret, profile, done) => {
   if (req.user) {
     User.findOne({ twitter: profile.id }, (err, existingUser) => {
@@ -88,7 +87,7 @@ passport.use(new TwitterStrategy({
       const user = new User();
       // Twitter will not provide an email address.  Period.
       // But a person’s twitter username is guaranteed to be unique
-      // so we can "fake" a twitter email address as follows:
+      // So we can "fake" a twitter email address as follows:
       user.email = `${profile.username}@twitter.com`;
       user.twitter = profile.id;
       user.tokens.push({ kind: 'twitter', accessToken, tokenSecret });
