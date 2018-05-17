@@ -33,6 +33,11 @@ function deleteTeam(teamId) {
     window.location = '/';
   });
 }
+function deleteLeague(leagueId) {
+	fetch(`/api/leagues/${leagueId}`, { method: 'delete' }).then(() => {
+		window.location = '/';
+	});
+}
 
 $('#countries').select2();
 

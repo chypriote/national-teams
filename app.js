@@ -123,6 +123,7 @@ app.get('/leagues/new', leagueController.postLeague);
 app.get('/leagues/:id', leagueController.getLeague);
 app.get('/api/leagues/:id/teams', leagueController.getTeamsForLeague);
 app.post('/api/leagues', multer({ storage: leagueLogoStorage }).single('logo'), leagueController.post);
+app.delete('/api/leagues/:id', leagueController.deleteLeague);
 
 /**
  * Error Handler.
