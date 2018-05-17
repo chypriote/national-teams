@@ -12,9 +12,9 @@ function previewFile() {
   }
 }
 
-function getRegionTeams(event, region) {
+function getLeagueTeams(event, league) {
   event.preventDefault();
-  fetch('/api/teams/' + region).then(function (response) {return response.json();})
+  fetch('/api/leagues/' + league + '/teams').then(function (response) {return response.json();})
     .then(function (response) {
       const select = document.getElementById('teamNames');
       select.options.length = 0;
@@ -34,13 +34,15 @@ function deleteTeam(teamId) {
   });
 }
 
+$('#countries').select2();
+
 $('button[data-filter]').click(function () {
-  let region = $(this).attr('data-filter');
-  $('#regionSelect').html($(this).html());
+  let league = $(this).attr('data-filter');
+  $('#leagueSelect').html($(this).html());
 
-  if (region === 'all')
-    return $('[data-region]').fadeIn("fast");
+  if (league === 'all')
+    return $('[data-league]').fadeIn("fast");
 
-  $('[data-region]').hide();
-  $('[data-region][data-region="'+region+'"]').fadeIn("fast");
+  $('[data-league]').hide();
+  $('[data-league][data-league="'+league+'"]').fadeIn("fast");
 });

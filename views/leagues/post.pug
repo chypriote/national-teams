@@ -4,20 +4,30 @@ block content
   .col-md-8.offset-md-2
     .card
       .card-header
-        h3 Ajouter une league
+        h3 Add a league
 
       form.card-body(method='POST', enctype='multipart/form-data', action="/api/leagues")
         input(type='hidden', name='_csrf', value=_csrf)
         .form-group.row
-          label(class='col-sm-3 control-label', for='name') Nom
+          label(class='col-sm-3 control-label', for='name') Name
           .col-sm-9
             input.form-control(type='text', name='name', id='name', autofocus=true)
         .form-group.row
-          label(class='col-sm-3 control-label', for='countries') Pays
+          label(class='col-sm-3 control-label', for='countries') Countries
           .col-sm-9
-            select.form-control(name='countries', id='countries', multiple)
+            select.form-control(name='countries[]', id='countries', multiple="multiple")
               for country in countries
                 option(value=country.code) #{country.name}
+
+        .form-group.row
+          label(class='col-sm-3 control-label', for='leaguepedia') Leaguepedia
+          .col-sm-9
+            input.form-control(type='text', name='leaguepedia', id='leaguepedia')
+        .form-group.row
+          label(class='col-sm-3 control-label', for='website') Website
+          .col-sm-9
+            input.form-control(type='text', name='website', id='website')
+
         .form-group.row
           label(class='col-sm-3 control-label', for='logo') Logo
           .col-sm-9
@@ -28,4 +38,4 @@ block content
             .float-right
               button.btn.btn-primary(type='submit')
                 i.fa.fa-envelope
-                | Enregistrer
+                | Save

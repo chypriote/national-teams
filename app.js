@@ -109,7 +109,6 @@ app.get('/teams/new', teamController.postTeam);
 app.get('/teams/:id', teamController.getTeam);
 app.post('/api/teams', multer({storage: teamLogoStorage}).single('logo'), teamController.post);
 app.delete('/api/teams/:id', teamController.deleteTeam);
-app.get('/api/teams/:region', teamController.getTeamsForRegion);
 
 const playerController = require('./controllers/player');
 app.get('/players/new', playerController.postPlayer);
@@ -119,6 +118,7 @@ const leagueController = require('./controllers/league');
 app.get('/leagues', leagueController.getLeagues);
 app.get('/leagues/new', leagueController.postLeague);
 app.get('/leagues/:id', leagueController.getLeague);
+app.get('/api/leagues/:id/teams', leagueController.getTeamsForLeague);
 app.post('/api/leagues', multer({storage: leagueLogoStorage}).single('logo'), leagueController.post);
 
 /**

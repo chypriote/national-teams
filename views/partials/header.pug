@@ -9,21 +9,21 @@
     ul.navbar-nav.mr-auto
       li.nav-item(class=(title === 'Leagues') ? 'active' : undefined)
         a.nav-link(href='/leagues') Leagues
-      li.nav-item(class=(title === 'Equipes') ? 'active' : undefined)
-        a.nav-link(href='/teams') Equipes
+      li.nav-item(class=(title === 'Teams') ? 'active' : undefined)
+        a.nav-link(href='/teams') Teams
       li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
         a.nav-link(href='/contact') Contact
       //if user
-      li.nav-item.dropdown(class=(title.indexOf('Ajouter') >= 0 ? 'active' : undefined))
+      li.nav-item.dropdown(class=(title.indexOf('Add') >= 0 ? 'active' : undefined))
         a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-          span Ajouter
+          span Add
           i.caret
         div.dropdown-menu
-          a.dropdown-item(href='/leagues/new') Leagues
+          a.dropdown-item(href='/leagues/new') League
           .dropdown-divider
-          a.dropdown-item(href='/teams/new') Equipe
+          a.dropdown-item(href='/teams/new') Team
           .dropdown-divider
-          a.dropdown-item(href='/players/new') Joueur
+          a.dropdown-item(href='/players/new') Player
 
     ul.nav.navbar-nav
       if !user

@@ -4,8 +4,8 @@ block content
   h2 #{league.name}
     .nt-btn-bar.float-right
       if user && !teams.length
-        button.btn.btn-danger(onclick="deleteLeague('"+league.id+"')") Supprimer
-      a.btn.btn-primary(href='/leagues') Retour
+        button.btn.btn-danger(onclick="deleteLeague('"+league.id+"')") Delete
+      a.btn.btn-primary(href='/leagues') Back
   hr
 
   .row
@@ -13,19 +13,19 @@ block content
       .row
         .col.col-12
           img.avatar.avatar-lg(src='/assets/leagues/' + league.logo)
-        .col.col-12.nt-bubbles
+        .col.col-12.nt-bubbles.mt-2
           for country in league.countries
             .nt-bubble
               i.flag-icon(class="flag-icon-" + country.toLowerCase())
-        .col.col-12
-          .text-center #{league.website}
-        .col.col-12
-          .text-center #{league.leaguepedia}
+        .col.col-12.mt-3
+          a.text-center.text-info(href=league.website) Website
+        .col.col-12.mt-1
+          a.text-center.text-info(href=league.leaguepedia) Leaguepedia Page
     .col-sm-9
       .row
         for team in teams
           div.col.col-12
-            a.card(href='/teams/' + team.id)
+            a.card(href='/teams/' + team._id)
               .card-body.nt-flex-card
                 .nt-lollypop
                   .nt-lollypop_pop

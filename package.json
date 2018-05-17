@@ -40,6 +40,7 @@
     "passport-twitter": "^1.0.4",
     "pug": "^2.0.3",
     "request": "^2.86.0",
+    "select2": "^4.0.6-rc.1",
     "validator": "^8.2.0"
   },
   "devDependencies": {

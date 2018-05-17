@@ -1,21 +1,21 @@
 extends ../layout
 
 block content
-    h2 Leagues
-        a.float-right.btn.btn-primary(href='/leagues/new') Ajouter une league
-    hr
+  h2 Leagues
+    a.float-right.btn.btn-primary(href='/leagues/new') Add a league
+  hr
 
-    each league in leagues
-        div
-            a.card(href='/leagues/' + league.id)
-                .card-body.nt-flex-card
-                    .nt-lollypop
-                        .nt-lollypop_pop
-                            img.avatar.avatar-sm(src='/assets/leagues/' + league.logo)
-                        .nt-lollypop_stick
-                            h3 #{league.name}
-                    for country in league.countries
-                        .nt-bubbles
-                            .nt-bubble
-                               i.flag-icon(class="flag-icon-" + country.toLowerCase())
-            br
+  each league in leagues
+    div
+      a.card(href='/leagues/' + league.id)
+        .card-body.nt-flex-card
+          .nt-lollypop
+            .nt-lollypop_pop
+              img.avatar.avatar-sm(src='/assets/leagues/' + league.logo)
+            .nt-lollypop_stick
+              h3 #{league.name}
+          .nt-bubbles
+            for country in league.countries
+              .nt-bubble
+                i.flag-icon(class="flag-icon-" + country.toLowerCase())
+      br

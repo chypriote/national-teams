@@ -54,3 +54,11 @@ a.card {
 .nt-btn-bar {
 	.btn {margin-left: .5rem;}
 }
+
+.select2-container--open {
+	color: #495057;
+	background-color: #fff;
+	border-color: #80bdff;
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}

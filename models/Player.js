@@ -8,6 +8,11 @@ const playerSchema = new mongoose.Schema({
   role: String,
 
   teamId: String,
+	team: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Team',
+		require: true,
+	},
 
   twitter: String,
 }, { timestamps: true });
@@ -61,9 +66,9 @@ playerSchema.methods.availableCountries = () => {
   ];
 };
 
-playerSchema.methods.countryCodes = (region) => {
+playerSchema.methods.countryCodes = (code) => {
   let country = _.find(playerSchema.methods.availableCountries(), (country) => {
-    return country.value === region;
+    return country.value === code;
   });
 
   return country.code;

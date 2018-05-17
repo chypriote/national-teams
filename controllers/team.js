@@ -1,43 +1,45 @@
 const Team = require('../models/Team');
 const Player = require('../models/Player');
 const League = require('../models/League');
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
+const countryList = require('country-list')();
 
 /**
  * GET /teams
  * Teams page.
  */
 exports.getTeams = (req, res, next) => {
-  let team = new Team;
-  Team.find({}).sort({name: 1}).exec((err, teams) => {
-    if (err) return next(err);
+  const getTeams = Team.find({}).sort({name: 1}).populate('league').exec();
+  const getLeagues = League.find({teams: {$not: {$size: 0}}}).sort({name: 1}).exec();
 
-    res.render('teams/teams', {
-      title: 'Equipes',
-      teams: teams,
-      regions: team.availableRegions(),
-      regionInfos: team.regionInfos
-    });
-  });
+  Promise.all([getTeams, getLeagues])
+    .then(results => {
+
+      res.render('teams/teams', {
+        title: 'Teams',
+				teams: results[0],
+        leagues: results[1],
+      });
+    })
+    .catch(err => next(err));
 };
 
 /**
  * GET /teams/:id
  * Team page.
  */
-exports.getTeam = (req, res) => {
+exports.getTeam = (req, res, next) => {
   const teamId = req.params.id;
-  let player = new Player;
   if (!teamId) res.redirect(index);
 
   Team.findOne({_id:teamId}, function (err, team) {
-    res.render('teams/team', {
+  	if (err) return next(err);
+
+    return res.render('teams/team', {
       title: team.name,
       team: team,
-      countryCode: player.countryCodes
+	    codeFromCountry: new Player().countryCodes,
     });
-  });
+  }).populate('league');
 };
 
 /**
@@ -45,14 +47,16 @@ exports.getTeam = (req, res) => {
  * Post team page.
  */
 exports.postTeam = (req, res) => {
-	let team = new Team;
-
 	League.find({}).sort({name: 1}).exec((err, leagues) => {
 		if (err) return next(err);
 
-		res.render('teams/post', {
-			title: 'Ajouter une équipe',
-			regions: team.availableRegions(),
+		if (!leagues.length) {
+			req.flash('info', {msg: 'You must create a league first'});
+			return res.redirect('/leagues/new');
+		}
+
+		return res.render('teams/post', {
+			title: 'Add a team',
 			leagues: leagues,
 		});
 	});
@@ -64,7 +68,7 @@ exports.postTeam = (req, res) => {
  */
 exports.post = (req, res, next) => {
   req.assert('name', 'Name cannot be blank').notEmpty();
-  // req.assert('region', 'Region cannot be blank').notEmpty();
+  req.assert('league', 'League cannot be blank').notEmpty();
 
   const errors = req.validationErrors();
   if (errors) {
@@ -78,27 +82,23 @@ exports.post = (req, res, next) => {
 
   const team = new Team({
     name: req.body.name,
-    logo: req.file.filename,
-    leagueId: req.body.region,
+    logo: req.file.filename
   });
 
-  Team.findOne({name: req.body.name}, (err, existingTeam) => {
-    if (err) return next(err);
-    if (existingTeam) {
-      req.flash('errors', { msg: 'A team with that name already exists.' });
-      return res.redirect('/teams/new');
-    }
-  });
-
-	team.save((err, team) => {
+	League.findOne({_id: req.body.league}, (err, league) => {
 		if (err) return next(err);
-		League.update({_id:req.body.region}, {$push: {'teams': team}}, (err) => {
-			if (err) return next(err);
+		team.league = league;
 
-			req.flash('success', { msg: 'Team was successfully added.' });
-			return res.redirect('/teams/new');
-		});
+		let save = team.save();
+		let update = League.update({_id:req.body.league}, {$push: {teams: team}});
+		Promise.all([save, update])
+			.then(() => {
+				req.flash('success', { msg: `Team ${team.name} was successfully added.` });
+				return res.redirect('/teams/new');
+			})
+			.catch(err => next(err));
 	});
+
 };
 
 /**
@@ -113,13 +113,5 @@ exports.deleteTeam = (req, res, next) => {
     if (err) return next(err);
     req.flash('errors', { msg: 'The team was successfully deleted.' });
     res.send(204);
-  });
-};
-
-exports.getTeamsForRegion = (req, res) => {
-  const region = req.params.region;
-  Team.find({region: region}, (err, teams) => {
-    res.setHeader('Content-Type', 'application/json');
-    return res.send(JSON.stringify(teams));
   });
 };

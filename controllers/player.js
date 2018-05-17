@@ -1,15 +1,25 @@
 const Player = require('../models/Player');
 const Team = require('../models/Team');
+const League = require('../models/League');
 
 exports.postPlayer = (req, res) => {
   const player = new Player;
-  const team = new Team;
-  res.render('players/post', {
-    title: 'Ajouter un joueur',
-    roles: player.availableRoles(),
-    regions: team.availableRegions(),
-    countries: player.availableCountries(),
-  });
+
+	League.find({teams: {$not: {$size: 0}}}).sort({name: 1}).exec((err, leagues) => {
+		if (err) return next(err);
+
+		if (!leagues.length) {
+			req.flash('info', {msg: 'You must create a league and add teams first'});
+			return res.redirect('/leagues/new');
+		}
+
+		res.render('players/post', {
+			title: 'Add a player',
+			roles: player.availableRoles(),
+			leagues: leagues,
+			countries: player.availableCountries(),
+		});
+	});
 };
 
 exports.post = (req, res) => {
@@ -29,24 +39,19 @@ exports.post = (req, res) => {
     country: req.body.country,
     picture: req.body.picture,
     role: req.body.role,
-    teamId: req.body.team,
   });
 
-  Player.findOne({name: req.body.name}, (err, existingPlayer) => {
-    if (err) return next(err);
-    if (existingPlayer) {
-      req.flash('errors', { msg: 'A player with that name already exists.' });
-      return res.redirect('/players/new');
-    }
+	Team.findOne({_id: req.body.team}, (err, team) => {
+		if (err) return next(err);
+		player.team = team;
 
-    player.save((err, player) => {
-      if (err) return next(err);
-      Team.update({_id: req.body.team}, {$push: {'players': player}}, (err) => {
-        if (err) return next(err);
-
-        req.flash('success', { msg: 'Player was successfully added.' });
-        return res.redirect('/players/new');
-      });
-    });
-  });
+		let save = player.save();
+		let update = Team.update({_id:req.body.team}, {$push: {players: player}});
+		Promise.all([save, update])
+			.then(() => {
+				req.flash('success', { msg: `Player ${player.name} was successfully added.` });
+				return res.redirect('/players/new');
+			})
+			.catch(err => next(err));
+	});
 };

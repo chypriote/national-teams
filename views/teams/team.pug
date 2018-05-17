@@ -4,18 +4,21 @@ block content
   h2 #{team.name}
     .nt-btn-bar.float-right
       if user
-        button.btn.btn-danger(onclick="deleteTeam('"+team.id+"')") Supprimer
-      a.btn.btn-primary(href='/teams') Retour
+        button.btn.btn-danger(onclick="deleteTeam('"+team.id+"')") Delete
+      a.btn.btn-primary(href='/teams') Back
   hr
 
   .row
     .col-sm-3.text-center
-      img.avatar.avatar-lg(src='/assets/teams/' + team.logo)
-      .text-center.font-weight-bold #{team.regionName(team.region)}
+      .row
+        .col.col-12
+          img.avatar.avatar-lg(src='/assets/teams/' + team.logo)
+        .col.col-12.mt-2
+          a.text-center.text-info.font-weight-bold(href='/leagues/' + team.league.id) #{team.league.name}
     .col-sm-9
       .row
         for player in team.players
-          .col
+          .col.col-sm-2
             if player.picture
               img(src=player.picture)
             else
@@ -25,5 +28,5 @@ block content
               .nt-bubble
                 img(src="/assets/roles/" + player.role + ".png")
               .nt-bubble
-                i.flag-icon(class="flag-icon-" + countryCode(player.country))
+                i.flag-icon(class="flag-icon-" + codeFromCountry(player.country.toLowerCase()))
 
