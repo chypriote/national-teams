@@ -1,6 +1,7 @@
 const Team = require('../models/Team');
 const Player = require('../models/Player');
 const League = require('../models/League');
+const _ = require('lodash');
 
 /**
  * GET /teams
@@ -106,9 +107,20 @@ exports.deleteTeam = (req, res, next) => {
   const teamId = req.params.id;
   if (!teamId) res.redirect('index');
 
-  Team.remove({ _id: teamId }, (err) => {
-    if (err) return next(err);
-    req.flash('errors', { msg: 'The team was successfully deleted.' });
-    res.send(204);
+  Team.findOne({_id: req.params.id}, (err, team) => {
+	  if (err) return next(err);
+
+	  League.findOne({_id: team.league}, (err, league) => {
+		  if (err) return next(err);
+
+		  // noinspection EqualityComparisonWithCoercionJS
+		  league.teams = _.filter(league.teams, (item) => item._id != team.id);
+		  Promise.all([league.save(), team.remove()])
+			  .then(() => {
+				  req.flash('errors', {msg: 'The team was successfully deleted.'});
+				  return res.redirect('index');
+			  })
+			  .catch(err => next(err));
+	  });
   });
 };

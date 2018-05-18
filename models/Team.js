@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const League = require('./League');
 
 const teamSchema = new mongoose.Schema({
   name: { type: String, unique: true },
